@@ -17,7 +17,9 @@ namespace ConsoleAppIpAdrress
                 LogEntryOptions logEntryOptions = new();
                 var logReader = new FileLogReader();
                 var dataWriter = new EntryLogFileWriter();
+                var parametersFromFileReader = new ParametersFromFileReader();
                 var logDictionary = new EntryLogCollector();
+                var settingsFromFileParser = new SettingFromFileParser();
                 
                 var logEntryOptionsValidator = new LogEntryOptionValidator();
 
@@ -28,7 +30,10 @@ namespace ConsoleAppIpAdrress
                     logEntryOptions = parser.Parse(args);
                 }
 
-                var validLogEntryOptions = logEntryOptionsValidator.ValidateLogEntryOptions(logEntryOptions);
+                var settingsFromFile = parametersFromFileReader.GetSettingsFromFile();
+                var additionLogEntryOptions = settingsFromFileParser.PopulateOtherParameters(logEntryOptions, settingsFromFile);
+
+                var validLogEntryOptions = logEntryOptionsValidator.ValidateLogEntryOptions(additionLogEntryOptions);
 
                 var dataProcessor = new DataProcessor(logDictionary, validLogEntryOptions);
 
@@ -38,12 +43,14 @@ namespace ConsoleAppIpAdrress
                 dataWriter.FileWrite(resultDictionary, validLogEntryOptions.OutputFilePath);
                 Console.WriteLine("результат был записан в файл:");
                 Console.WriteLine(validLogEntryOptions.OutputFilePath);
-                PrintEndMessage();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("произошла ошибка");
                 Console.WriteLine(ex.Message);
+            }
+            finally 
+            {
                 PrintEndMessage();
             }
         }
