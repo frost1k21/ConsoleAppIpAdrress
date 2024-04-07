@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleAppIpAdrress": {
+      "commandName": "Project",
+      "commandLineArgs": "--address-start 192.168.3.7 --address-mask 21 --time-start 06.04.2024 --time-end 07.04.2024 --file-log \"D:\\Projects\\for-tests\\ConsoleAppIpAdrress\\ConsoleAppIpAdrress\\bin\\Debug\\net8.0\\log.txt\" --file-output \"D:\\Projects\\for-tests\\ConsoleAppIpAdrress\\ConsoleAppIpAdrress\\bin\\Debug\\net8.0\\result.txt\""
+    }
+  }
+}
